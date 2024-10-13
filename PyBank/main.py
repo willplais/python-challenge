@@ -5,18 +5,14 @@
 import csv
 import os
 
-# Files to load and output (update with correct file paths)
+# Files to load and output
 file_to_load = os.path.join("Resources", "budget_data.csv")  # Input file path
 file_to_output = os.path.join("analysis", "budget_analysis.txt")  # Output file path
 
-# Define variables to track the financial data
 total_months = 0
 total_net = 0
-
 month_month_changes = []
 previous_month_profit = 0
-
-# Add more variables to track other necessary financial data
 greatest_month = {
     "month": "",
     "adjustment": 0
@@ -44,9 +40,9 @@ with open(file_to_load) as financial_data:
         total_net = total_net + month_net
 
         if total_months > 1:
-            print(f"{month_net} - {previous_month_profit}")
+            # print(f"{month_net} - {previous_month_profit}")
             month_change = (month_net - previous_month_profit)
-            print(month_change)
+            # print(month_change)
             month_month_changes.append(month_change)
 
             # Calculate the greatest increase in profits (month and amount)
@@ -64,7 +60,6 @@ with open(file_to_load) as financial_data:
 
 
 # Calculate the average net change across the months
-# avg_net = round(float(total_net / total_months), 2)
 # print(f"{month_month_changes}")
 avg_net = sum(month_month_changes) / len(month_month_changes)
 

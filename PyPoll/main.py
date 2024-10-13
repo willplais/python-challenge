@@ -4,18 +4,16 @@
 import csv
 import os
 
-# Files to load and output (update with correct file paths)
+# Files to load and output
 file_to_load = os.path.join("Resources", "election_data.csv")  # Input file path
 file_to_output = os.path.join("analysis", "election_analysis.txt")  # Output file path
 
 # Initialize variables to track the election data
-total_votes = 0  # Track the total number of votes cast
-
-# Define lists and dictionaries to track candidate names and vote counts
-
+total_votes = 0 
+candidates = []
+candidate_votes = []
 
 # Winning Candidate and Winning Count Tracker
-
 
 # Open the CSV file and process it
 with open(file_to_load) as election_data:
@@ -31,39 +29,48 @@ with open(file_to_load) as election_data:
         print(". ", end="")
 
         # Increment the total vote count for each row
-
+        total_votes += 1
 
         # Get the candidate's name from the row
-
+        candidate_name = row[2]
 
         # If the candidate is not already in the candidate list, add them
+        if any(candidate_name in candidate for candidate in candidates):
+            candidate_index = candidates.index(candidate_name)
+            candidate_votes[candidate_index]["votes"] += 1
+        else:
+            candidates.append(candidate_name)
+            candidate_votes.append({
+                "name": candidate_name,
+                "votes": 1
+            })
 
+# print(f"{candidate_votes}")
 
-        # Add a vote to the candidate's count
+print("\n")
+candidate_summary = ""
+winning_candidate = ""
+winning_votes = 0
 
+for candidate in candidate_votes:
+    candidate_summary = f"{candidate_summary}{candidate["name"]}: {round((candidate["votes"] / total_votes) * 100, 3)}% ({candidate["votes"]})\n"
+    if candidate["votes"] > winning_votes:
+        winning_candidate = candidate["name"]
+        winning_votes = candidate["votes"]
+
+# Generate the output summary
+output = (
+    f"Election Results\n"
+    "----------------------------\n"
+    f"Total Votes: {total_votes}\n"
+    f"----------------------------\n{candidate_summary}"
+    f"----------------------------\nWinner: {winning_candidate}\n"
+    "----------------------------\n"
+)
+
+# Print the output
+print(f"{output}")
 
 # Open a text file to save the output
 with open(file_to_output, "w") as txt_file:
-
-    # Print the total vote count (to terminal)
-
-
-    # Write the total vote count to the text file
-
-
-    # Loop through the candidates to determine vote percentages and identify the winner
-
-
-        # Get the vote count and calculate the percentage
-
-
-        # Update the winning candidate if this one has more votes
-
-
-        # Print and save each candidate's vote count and percentage
-
-
-    # Generate and print the winning candidate summary
-
-
-    # Save the winning candidate summary to the text file
+    txt_file.write(f"{output}")
