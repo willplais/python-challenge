@@ -45,8 +45,6 @@ with open(file_to_load) as election_data:
                 "votes": 1
             })
 
-# print(f"{candidate_votes}")
-
 print("\n")
 candidate_summary = ""
 winning_candidate = ""

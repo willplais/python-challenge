@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-"""PyBank Homework Starter File."""
 
 # Dependencies
 import csv
@@ -40,9 +39,7 @@ with open(file_to_load) as financial_data:
         total_net = total_net + month_net
 
         if total_months > 1:
-            # print(f"{month_net} - {previous_month_profit}")
             month_change = (month_net - previous_month_profit)
-            # print(month_change)
             month_month_changes.append(month_change)
 
             # Calculate the greatest increase in profits (month and amount)
@@ -60,7 +57,6 @@ with open(file_to_load) as financial_data:
 
 
 # Calculate the average net change across the months
-# print(f"{month_month_changes}")
 avg_net = sum(month_month_changes) / len(month_month_changes)
 
 # Generate the output summary
